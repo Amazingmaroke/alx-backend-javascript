@@ -1,25 +1,26 @@
-const assert = require('assert');
-const calculateNumber = require('./0-calcul');
-const { describe, it } = require('mocha');
+/* unittest for the application */
 
-describe('calculateNumber', () => {
-  it('should return the sum of two rounded numbers', () => {
-    const result = calculateNumber(2.4, 3.6);
-    assert.strictEqual(result, 6);
-  });
+const assert = require('assert')
+const calculateNumber = require('./0-calcul')
 
-  it('should return the sum of two negative rounded numbers', () => {
-    const result = calculateNumber(-2.4, -3.6);
-    assert.strictEqual(result, -6);
-  });
 
-  it('should return the sum of a positive rounded number and a negative rounded number', () => {
-    const result = calculateNumber(2.4, -3.6);
-    assert.strictEqual(result, -2);
-  });
-
-  it('should return sum of a number string and a number', () => {
-    const result = calculateNumber('2.4', 3.6);
-    assert.strictEqual(result, 6);
-  });
-});
+describe('Testing 0-calcul module', () => {
+    it('Adding two numbers', () => {
+        assert.strictEqual(calculateNumber(3, 7), 10)
+    })
+    it('Rouding functionality', () => {
+        assert.strictEqual(calculateNumber(2.1, 4), 6)
+    })
+    it('First argument is a double', () => {
+        assert.strictEqual(calculateNumber(3.5, 2), 6)
+    })
+    it('Second argument is a double', () => {
+        assert.strictEqual(calculateNumber(4, 9.0), 13)
+    })
+    it('Both arguments are doubles', () => {
+        assert.strictEqual(calculateNumber(2.1, 2.1), 4)
+    })
+    it('Both arguments are integers', () => {
+        assert.strictEqual(calculateNumber(2, 4), 6)
+    })
+})

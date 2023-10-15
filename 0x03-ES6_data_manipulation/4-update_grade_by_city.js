@@ -1,19 +1,27 @@
-export default function updateStudentGradeByCity(students, city, newGrades) {
-  // get all students in the location
-  const studentByLocation = students.filter(
-    (student) => student.location === city,
-  );
+/* eslint-disable no-prototype-builtins */
+/* eslint-disable no-param-reassign */
 
-  // map the studentByLocation array and update grades
-  const updatedStudents = studentByLocation.map((student) => {
-    const studentWithId = newGrades.find(
-      (studentById) => student.id === studentById.studentId,
-    );
-    return {
-      ...student,
-      grade: studentWithId ? studentWithId.grade : 'N/A',
-    };
+export default function updateStudentGradeByCity(studArray, city, newGrades) {
+  if (!Array.isArray(studArray)) {
+    throw new TypeError(`${studArray} is not a valid student array`);
+  }
+  if (typeof city !== 'string') {
+    throw new TypeError(`${city} is not a valid city name`);
+  }
+  if (!Array.isArray(newGrades)) {
+    throw new TypeError(`${newGrades} is not a valid grades array`);
+  }
+
+  const cityStuds = studArray.filter((student) => student.location === city);
+  return cityStuds.map((student) => {
+    for (const gradesData of newGrades) {
+      if (!student.hasOwnProperty('grade')) {
+        student.grade = 'N/A';
+      }
+      if (gradesData.studentId === student.id) {
+        student.grade = gradesData.grade;
+      }
+    }
+    return student;
   });
-
-  return updatedStudents;
 }

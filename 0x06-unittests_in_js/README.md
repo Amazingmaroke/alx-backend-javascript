@@ -1,57 +1,27 @@
-## Unittest in Javascript with Mocha
+![img](https://assets.imaginablefutures.com/media/images/ALX_Logo.max-200x150.png)
 
-This project demonstrates how to write unit tests in Javascript using the Mocha framework.
+![ tests wont fail if you skip them](../assets/tests-cant-fail.jpeg)
 
-### Getting Started
+## About
+Unit testing is a software testing technique where individual units or components of a software application are tested in isolation to ensure that they perform as expected. The primary goal of unit testing is to validate that each unit of code (typically a function or method) behaves correctly and produces the expected results when given specific inputs. Unit tests help catch and prevent defects early in the development process, leading to more reliable and maintainable software
 
-To get started, clone this repository to your local machine.
+## Resources
+__Read or watch__:
 
-```
-git clone https://github.com/yourusername/unittest-in-javascript-with-mocha.git
-```
+1. [Mocha documentation](https://mochajs.org/#installation)
+2. [Chai](https://www.chaijs.com/)
+3. [Sinon](https://sinonjs.org/)
+4. [Express](https://expressjs.com/en/guide/routing.html)
+5. [Request](https://www.npmjs.com/package/request)
+6. [How to Test NodeJS Apps using Mocha, Chai and SinonJS](https://www.digitalocean.com/community/tutorials/how-to-test-nodejs-apps-using-mocha-chai-and-sinonjs)
 
-### Installing Dependencies
+## Learning objectives
 
-To install the dependencies for this project, run the following command in the terminal:
-
-```
-npm install
-```
-
-### Running the Tests
-
-To run the tests, run the following command in the terminal:
-
-```
-npm test
-```
-
-### Writing Tests
-
-To write a test, create a new file in the `tests` directory. The file name should be prefixed with `test-`. For example, to create a test for the `add` function, you would create a file called `test-add.js`.
-
-In the test file, you can import the functions that you want to test. For example, to import the `add` function, you would use the following code:
-
-```
-import { add } from './index.js';
-```
-
-You can then write your tests using the Mocha framework. For more information on how to write Mocha tests, please refer to the [Mocha documentation](https://mochajs.org/).
-
-### Debugging Tests
-
-If you are having trouble with your tests, you can use the Mocha debugger to help you track down the problem. To enable the debugger, run the following command in the terminal:
-
-```
-npm run test:debug
-```
-
-This will start the Mocha debugger in the browser. You can then use the debugger to step through your tests and see where the problem is occurring.
-
-### Further Reading
-
-For more information on unit testing in Javascript, please refer to the following resources:
-
-* [Mocha documentation](https://mochajs.org/)
-* [Jasmine documentation](https://jasmine.github.io/)
-* [QUnit documentation](https://qunitjs.com/)
+- [X] How to use Mocha to write a test suite
+- [X] How to use different assertion libraries (Node or Chai)
+- [X] How to present long test suites
+- [X] When and how to use spies
+- [X] When and how to use stubs
+- [X] What are hooks and when to use them
+- [X] Unit testing with Async functions
+- [X] How to write integration tests with a small node server

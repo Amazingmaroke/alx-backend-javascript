@@ -1,9 +1,17 @@
+/*
+ * typed arrays
+*/
+
 export default function createInt8TypedArray(length, position, value) {
-  if (position < 0 || position >= length) {
+  if (typeof length !== 'number' || typeof position !== 'number' || typeof value !== 'number') {
     throw new Error('Position outside range');
   }
-  const arrayBuf = new ArrayBuffer(length);
-  const int8 = new Int8Array(arrayBuf, 0, length);
-  int8.set([value], position);
-  return new DataView(arrayBuf);
+  if (position >= length) {
+    throw new Error('Position outside range');
+  }
+  const buff = new ArrayBuffer(length);
+  const nView = new DataView(buff, 0, length);
+  const arr = new Int8Array(buff);
+  arr[position] = value;
+  return nView;
 }

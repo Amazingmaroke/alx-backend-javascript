@@ -1,11 +1,18 @@
-// create a promise with resolve and reject
+#!/usr/bin/env node
+
+/*
+ * Never make a promise you wont keep
+*/
+
 export default function getFullResponseFromAPI(success) {
-  const promise = new Promise((resolve, reject) => {
+  return new Promise((res, rej) => {
     if (success) {
-      resolve({ status: 200, body: 'Success' });
+      res({
+        status: 200,
+        body: 'Success',
+      });
     } else {
-      reject(new Error('The fake API is not working currently'));
+      rej(new Error('The fake API is not working currently'));
     }
   });
-  return promise;
 }

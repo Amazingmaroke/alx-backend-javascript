@@ -1,27 +1,25 @@
-const calculateNumber = (type, a, b) => {
-  const roundA = Math.round(a);
-  const roundB = Math.round(b);
-  let result;
+#!/usr/bin/env node
 
-  switch (type) {
-    case 'SUM':
-      result = roundA + roundB;
-      break;
-    case 'SUBTRACT':
-      result = roundA - roundB;
-      break;
-    case 'DIVIDE':
-      if (roundB === 0) {
-        result = 'Error';
-      } else {
-        result = roundA / roundB;
+/* eslint-disable consistent-return */
+function calculateNumber(type, numA, numB) {
+  try {
+    const roundedA = Math.round(numA);
+    const roundedB = Math.round(numB);
+    if (type === 'SUM') {
+      return roundedA + roundedB;
+    } if (type === 'MULTIPLY') {
+      return roundedA * roundedB;
+    } if (type === 'SUBTRACT') {
+      return roundedA - roundedB;
+    } if (type === 'DIVIDE') {
+      if (roundedB === 0) {
+        return 'Error';
       }
-      break;
-    default:
-      result = 'Unrecognised type';
-      break;
+      return (roundedA / roundedB);
+    }
+  } catch (err) {
+    return (err);
   }
-  return result;
-};
+}
 
 module.exports = calculateNumber;

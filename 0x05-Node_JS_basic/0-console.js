@@ -1,5 +1,7 @@
-const displayMessage = (message) => {
-  console.log(message);
-};
+#!/usr/bin/env node
+
+function displayMessage(msg) {
+  console.log(msg);
+}
 
 module.exports = displayMessage;

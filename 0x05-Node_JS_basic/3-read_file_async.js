@@ -1,48 +1,47 @@
-const fs = require('fs');
+#!/usr/bin/env node
 
-const countStudents = async (path) => {
-  try {
-    // read the database
-    const studentData = await fs.promises.readFile(path, 'utf8');
-    const students = [];
+/* reading files async */
+/* eslint-disable no-unused-vars */
 
-    const transformedData = studentData.trim().split('\n').slice(1);
-    transformedData.forEach((data) => {
-      // destructure each data in the list seperated by ,
-      const [firstname, lastname, age, field] = data.split(',');
-      // if the destructured exist
-      if (firstname && lastname && age && field) {
-        // create a student object with the property name and their value
-        // eslint-disable-next-line object-curly-newline
-        students.push({ firstname, lastname, age, field });
+const { promisify } = require('util');
+const { readFile } = require('fs');
+
+const readFileAsync = promisify(readFile);
+
+function parseCsvLine(line) {
+  return line.split(',').map((item) => item.trim());
+}
+
+function countStudents(fileName) {
+  const students = {};
+  const fields = {};
+
+  return readFileAsync(fileName, 'utf-8')
+    .then((data) => {
+      const lines = data.trim().split('\n');
+      lines.shift(); // Remove header line
+      lines.forEach((line) => {
+        const [firstName, , , field] = parseCsvLine(line);
+
+        students[field] = students[field] || [];
+        students[field].push(firstName);
+
+        fields[field] = (fields[field] || 0) + 1;
+      });
+
+      const totalStudents = lines.length;
+      console.log(`Number of students: ${totalStudents}`);
+
+      for (const [key, value] of Object.entries(fields)) {
+        if (key !== 'field') {
+          const studentList = students[key].join(', ');
+          console.log(`Number of students in ${key}: ${value}. List: ${studentList}`);
+        }
       }
+    })
+    .catch((error) => {
+      throw new Error('Cannot load the database');
     });
-
-    console.log(`Number of students: ${students.length}`);
-
-    const fields = {};
-
-    students.forEach((student) => {
-      // extract firstname and field for the each student object
-      const { firstname, field } = student;
-      if (!fields[field]) {
-        fields[field] = [];
-      }
-      fields[field].push(firstname);
-    });
-
-    // eslint-disable-next-line guard-for-in
-    for (const field in fields) {
-      console.log(
-        `Number of students in ${field}: ${
-          fields[field].length
-        }. List: ${fields[field].join(', ')}`,
-      );
-    }
-  } catch (err) {
-    // console.log(err);
-    throw new Error('Cannot load the database');
-  }
-};
+}
 
 module.exports = countStudents;

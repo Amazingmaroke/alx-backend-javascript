@@ -1,25 +1,24 @@
+#!/usr/bin/env node
+
+/*
+ * full user signup functionality
+*/
 import signUpUser from './4-user-promise';
 import uploadPhoto from './5-photo-reject';
 
 export default function handleProfileSignup(firstName, lastName, fileName) {
-  const signUpUserPromise = signUpUser(firstName, lastName);
-  const uploadPhotoPromise = uploadPhoto(fileName);
+  const sUPromise = signUpUser(firstName, lastName);
+  const uPPromise = uploadPhoto(fileName);
 
-  const promise = Promise.allSettled([
-    signUpUserPromise,
-    uploadPhotoPromise,
-  ]).then((data) => {
-    const array = [];
-    // loop through the settled promises response
-    data.forEach((item) => {
-      if (item.status === 'fulfilled') {
-        array.push({ status: item.status, value: item.value });
+  return Promise.allSettled([sUPromise, uPPromise]).then((responses) => {
+    const returnValue = [];
+    responses.forEach((response) => {
+      if (response.status !== 'fulfilled') {
+        returnValue.push({ status: response.status, value: `${response.reason}` });
       } else {
-        array.push({ status: item.status, value: `${item.reason}` });
+        returnValue.push({ status: response.status, value: response.value });
       }
     });
-    // console.log(array);
-    return array;
+    return returnValue;
   });
-  return promise;
 }

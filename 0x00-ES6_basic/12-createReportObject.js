@@ -1,11 +1,8 @@
+#!/usr/bin/env node
+
 export default function createReportObject(employeesList) {
-  const employeesObj = {
-    allEmployees: {
-      ...employeesList,
-    },
-    getNumberOfDepartments(obj) {
-      return Object.entries(obj).length;
-    },
+  return {
+    allEmployees: employeesList,
+    getNumberOfDepartments: (employeesList) => Object.keys(employeesList).length,
   };
-  return employeesObj;
 }

@@ -1,6 +1,10 @@
+#!/usr/bin/env
+
+/*
+ * Race two promises
+*/
+
 export default function loadBalancer(chinaDownload, USDownload) {
-  const promise = Promise.race([chinaDownload, USDownload]).then(
-    (response) => response,
-  );
-  return promise;
+  return Promise.race([chinaDownload, USDownload])
+    .then((downloadData) => downloadData);
 }

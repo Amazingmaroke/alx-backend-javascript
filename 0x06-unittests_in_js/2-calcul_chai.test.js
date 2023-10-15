@@ -1,33 +1,28 @@
-const chai = require('chai');
-const { describe, it } = require('mocha');
-const expect = chai.expect;
+#!/usr/bin/env node
 
+/* test the calc module */
+/* eslint-disable */
+const assert = require('chai');
 const calculateNumber = require('./2-calcul_chai');
+const  expect  = assert.expect;
 
-describe('calculateNumber', () => {
-  it('should return the sum of two numbers when given "SUM" as type', () => {
-    expect(calculateNumber('SUM', 2.4, 3.6)).to.equal(6);
-    expect(calculateNumber('SUM', 5, 7)).to.equal(12);
-    expect(calculateNumber('SUM', -10, -5)).to.equal(-15);
-  });
+describe('Testing  calculateNumber feature ', () => {
+  it('Add Floating Point Numbers correctly', () => {
+    expect(calculateNumber('SUM', 1.4, 4.5)).to.equal(6)
+  })
+  it('Add whole Numbers correctly', ()=> {
+    expect(calculateNumber('SUM', 4, 5)).to.equal(9)
+  })
+  it('Subtract Numbers correctly', () => {
+    expect(calculateNumber('SUBTRACT', 1.4, 4.5)).to.equal(-4)
 
-  it('should return the difference of two numbers when given "SUBTRACT" as type', () => {
-    expect(calculateNumber('SUBTRACT', 8.9, 3.2)).to.equal(6);
-    expect(calculateNumber('SUBTRACT', 10, 5)).to.equal(5);
-    expect(calculateNumber('SUBTRACT', -7, -2)).to.equal(-5);
-  });
+  })
+  it('Divide Numbers correctly', () => {
+    expect(calculateNumber('DIVIDE', 1.4, 4.5)).to.equal(0.2)
 
-  it('should return the division of two numbers when given "DIVIDE" as type', () => {
-    expect(calculateNumber('DIVIDE', 6, 3)).to.equal(2);
-    expect(calculateNumber('DIVIDE', 9.4, 2.3)).to.equal(4.5);
-  });
+  })
+  it('Handle Zero division', () => {
+    expect(calculateNumber('DIVIDE', 1.4, 0)).to.equal('Error')
 
-  it('should return "Error" if the division by zero is attempted', () => {
-    expect(calculateNumber('DIVIDE', 10, 0)).to.equal('Error');
-    expect(calculateNumber('DIVIDE', -5, 0)).to.equal('Error');
-  });
-
-  it('should return "Unrecognised type" if an unknown type is given', () => {
-    expect(calculateNumber('MULTIPLY', 4, 5)).to.equal('Unrecognised type');
-  });
+  })
 });

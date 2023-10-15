@@ -1,15 +1,10 @@
-/* eslint-disable import/prefer-default-export */
 export const weakMap = new WeakMap();
 
-export function queryAPI(endpoint) {
-  // Check if the endpoint exists in the weakMap
-  if (!weakMap.has(endpoint)) {
-    weakMap.set(endpoint, 1);
-  } else {
-    const count = weakMap.get(endpoint);
-    if (count >= 5) {
-      throw new Error('Endpoint load is high.');
-    }
-    weakMap.set(endpoint, count + 1);
+export function queryAPI(endPoint) {
+  const total = weakMap.get(endPoint) || 0;
+  weakMap.set(endPoint, total + 1);
+  if (total >= 5) {
+    throw new Error('Endpoint load is high');
   }
+  return total;
 }

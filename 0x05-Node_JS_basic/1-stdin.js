@@ -1,30 +1,29 @@
-const readline = require('readline');
+#!/usr/bin/env node
 
-// create the process im and out interface
+/* a simple ad hoc script to practice nodejs */
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
+const WELCOME_MESSAGE_STUB = 'Welcome to Holberton School, what is your name?\n';
 
-console.log('Welcome to Holberton School, what is your name?');
-
-if (process.stdin.isTTY) {
-  rl.on('line', (ans) => {
-    console.log(`Your name is: ${ans}`);
-    process.exit();
+function school(message, callback) {
+  process.stdout.write(message);
+  process.stdin.on('data', (data) => {
+    callback(data);
   });
 }
 
-rl.on('line', (ans) => {
-  console.log(`Your name is: ${ans}`);
-});
-
-rl.on('close', () => {
-  console.log('This important software is now closing');
-});
-
-rl.on('SIGINT', () => {
-  console.log('This important software is now closing');
+function closingCallBack(data) {
+  process.stdout.write(`Your name is: ${data.toString()}`);
+  process.stdout.write('This important software is now closing\n');
   process.exit();
-});
+}
+
+function noClosingCallBack(data) {
+  process.stdout.write(`Your name is: ${data.toString()}`);
+  process.exit();
+}
+
+if (process.stdin.isTTY) {
+  school(WELCOME_MESSAGE_STUB, noClosingCallBack);
+} else {
+  school(WELCOME_MESSAGE_STUB, closingCallBack);
+}

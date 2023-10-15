@@ -1,7 +1,7 @@
-const calculateNumber = (a, b) => {
-  const roundA = Math.round(a);
-  const roundB = Math.round(b);
-  return roundA + roundB;
-};
+#!/usr/bin/node
 
-module.exports = calculateNumber;
+/* simple function to add  two numbers */
+
+module.exports = function calculateNumber(numA, numB){
+    return (Math.round(numA) + Math.round(numB))
+}

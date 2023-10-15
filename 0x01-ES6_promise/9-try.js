@@ -1,8 +1,13 @@
-export default function gaurdrail(myFunction) {
+#!/usr/bin/env node
+
+/*
+ * try and catch this throw
+*/
+
+export default function guardrail(mathFunction) {
   const queue = [];
   try {
-    const stuff = myFunction();
-    queue.push(stuff);
+    queue.push(mathFunction());
   } catch (err) {
     queue.push(`Error: ${err.message}`);
   } finally {

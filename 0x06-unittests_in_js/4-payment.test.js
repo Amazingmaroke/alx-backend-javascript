@@ -1,16 +1,22 @@
-const chai = require('chai');
-const { describe, it } = require('mocha');
-const expect = chai.expect;
-const assert = require('assert');
+#!/usr/bin/env node
+
+/* eslint-disable */
 const sinon = require('sinon');
 const Utils = require('./utils');
-const sendPaymentRequestToApi = require('./4-payment');
+const sendPaymentRequestToApi = require('./3-payment');
 
-describe('Test Utils calls args', () => {
-  it('should return cause Utils.calculate with 3 args', () => {
-    const spy = sinon.spy(console.log);
-    const stub = sinon.stub(Utils.calculateNumber).callsThrough;
+describe('sendPaymentRequestToApi', () => {
+  it('sendPaymentRequestToApi uses the calculateNumber method of Utils', () => {
+    const consoleSpy = sinon.spy(console);
+    const calculateNumberStub = sinon.stub(Utils, 'calculateNumber').returns(10);
+
     sendPaymentRequestToApi(100, 20);
-    assert.equal(spy.withArgs('The total is: 120').calledOnce, false);
+
+    sinon.assert.calledWithExactly(calculateNumberStub, 'SUM', 100, 20);
+    sinon.assert.calledOnce(calculateNumberStub);
+    sinon.assert.calledWithExactly(consoleSpy.log, 'The total is: 10');
+
+    // Restore the stub
+    calculateNumberStub.restore();
   });
 });

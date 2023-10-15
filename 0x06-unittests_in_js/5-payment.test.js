@@ -1,28 +1,35 @@
-const chai = require('chai');
-const sinon = require('sinon');
-const { expect } = chai;
+#!/usr/bin/env node
 
+/* eslint-disable */
+const sinon = require('sinon');
+const Utils = require('./utils');
 const sendPaymentRequestToApi = require('./5-payment');
 
-describe('Test Utils calls args', () => {
-  let spy;
+describe('sendPaymentRequestToApi', () => {
+  let consoleSpy;
   beforeEach(() => {
-    spy = sinon.spy(console, 'log');
-  });
+    if (!consoleSpy){
+      consoleSpy = sinon.spy(console)
+    }
+  })
 
   afterEach(() => {
-    spy.restore();
-  });
+    consoleSpy.log.resetHistory()
+  })
+  
+  it('sendPaymentRequestToApi(100, 20) logs the correct value to console', () => {
 
-  it('should return cause Utils.calculate with 3 args, given amount 100 and fee 20', () => {
     sendPaymentRequestToApi(100, 20);
-    expect(spy.calledWith('The total is: 120')).to.be.true;
-    expect(spy.callCount).to.equal(1);
+
+    sinon.assert.calledOnce(consoleSpy.log);
+    sinon.assert.calledWithExactly(consoleSpy.log, 'The total is: 120');
   });
 
-  it('should return cause Utils.calculate with 3 args, given amount 10 and fee 10', () => {
+  it('sendPaymentRequestToApi(10, 10) logs the correct value to console', () => {
+
     sendPaymentRequestToApi(10, 10);
-    expect(spy.calledWith('The total is: 20')).to.be.true;
-    expect(spy.callCount).to.equal(1);
+
+    sinon.assert.calledOnce(consoleSpy.log);
+    sinon.assert.calledWithExactly(consoleSpy.log, 'The total is: 20');
   });
 });

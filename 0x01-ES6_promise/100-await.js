@@ -1,11 +1,19 @@
+#!/usr/bin/env node
 import { uploadPhoto, createUser } from './utils';
 
 export default async function asyncUploadUser() {
   try {
-    const photoUpload = await uploadPhoto();
-    const userCreate = await createUser();
-    return { photo: photoUpload, user: userCreate };
-  } catch (error) {
-    return { photo: null, user: null };
+    const uPPromise = await uploadPhoto();
+    const uCPromise = await createUser();
+    return {
+      photo: uPPromise,
+      user: uCPromise,
+    };
+  } catch
+  (error) {
+    return {
+      photo: null,
+      user: null,
+    };
   }
 }

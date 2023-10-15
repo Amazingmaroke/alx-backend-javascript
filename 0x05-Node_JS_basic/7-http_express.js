@@ -1,76 +1,82 @@
-const fs = require('fs');
+#!/usr/bin/env node
+
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-unused-vars */
+
+const { promisify } = require('util');
+const { readFile } = require('fs');
 const express = require('express');
 
+const PORT = 1245;
+const HOST = '127.0.0.1';
 const app = express();
+const readFileAsync = promisify(readFile);
 
-let DBPATH = '';
-
-if (process.argv.length > 2) {
-  DBPATH = process.argv[2].toString();
+function parseCsvLine(line) {
+  return line.split(',').map((item) => item.trim());
 }
 
-const PORT = 1245;
+async function countStudents(fileName) {
+  const students = {};
+  const fields = {};
 
-const countStudents = async (path) => {
   try {
-    // read the database
-    const studentData = await fs.promises.readFile(path, 'utf8');
-    const students = [];
+    const data = await readFileAsync(fileName, 'utf-8');
+    const lines = data.trim().split('\n');
+    lines.shift(); // Remove header line
+    lines.forEach((line) => {
+      const [firstName, , , field] = parseCsvLine(line);
 
-    const transformedData = studentData.trim().split('\n').slice(1);
-    transformedData.forEach((data) => {
-      // destructure each data in the list seperated by ,
-      const [firstname, lastname, age, field] = data.split(',');
-      // if the destructured exist
-      if (firstname && lastname && age && field) {
-        // create a student object with the property name and their value
-        // eslint-disable-next-line object-curly-newline
-        students.push({ firstname, lastname, age, field });
-      }
+      students[field] = students[field] || [];
+      students[field].push(firstName);
+
+      fields[field] = (fields[field] || 0) + 1;
     });
 
-    let result = `Number of students: ${students.length}\n`;
+    const totalStudents = lines.length;
+    const results = {
+      totalStudents,
+      fields: {},
+    };
 
-    const fields = {};
-
-    students.forEach((student) => {
-      // extract firstname and field for the each student object
-      const { firstname, field } = student;
-      if (!fields[field]) {
-        fields[field] = [];
+    for (const [key, value] of Object.entries(fields)) {
+      if (key !== 'field') {
+        results.fields[key] = {
+          numberOfStudents: value,
+          studentList: students[key].join(', '),
+        };
       }
-      fields[field].push(firstname);
-    });
-
-    // eslint-disable-next-line guard-for-in
-    for (const field in fields) {
-      result += `Number of students in ${field}: ${
-        fields[field].length
-      }. List: ${fields[field].join(', ')}\n`;
     }
-    return result;
-  } catch (err) {
+
+    return results;
+  } catch (error) {
     throw new Error('Cannot load the database');
   }
-};
+}
 
-app.get('/', (req, res) => {
-  res.send('Hello Holberton School!');
+app.get('/', (req, resp) => {
+  resp.statusCode = 200;
+  resp.setHeader('Content-Type', 'text/plain');
+  resp.setHeader('X-Served-By', 'itsfoss');
+  resp.send('Hello Holberton School!');
 });
 
-app.get('/students', (req, res) => {
-  countStudents(DBPATH)
-    .then((data) => {
-      res.send(['This is the list of our students', data].join('\n'));
-    })
-    .catch((err) => {
-      // eslint-disable-next-line prefer-template
-      res.send('This is the list of our students\n' + err.message.toString());
+app.get('/students', (req, resp) => {
+  countStudents(process.argv[2]).then((data) => {
+    resp.write('This is the list of our students\n');
+    resp.write(`Number of students: ${data.totalStudents}\n`);
+    for (const [fieldName, fieldData] of Object.entries(data.fields)) {
+      resp.write(`Number of students in ${fieldName}: ${fieldData.numberOfStudents}. List: ${fieldData.studentList}\n`);
+    }
+
+    resp.end();
+  })
+    .catch((error) => {
+      resp.statusCode = 404;
+      resp.write('This is the list of our students\n');
+      resp.end('Cannot load the database\n');
     });
 });
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+app.listen(PORT, HOST, () => {});
 
 module.exports = app;

@@ -1,11 +1,9 @@
-const getListStudentIds = (array) => {
-  const temp = array;
-  let idList = [];
-  if (temp instanceof Array) {
-    idList = temp.map((obj) => obj.id);
-    return idList;
-  }
-  return idList;
-};
+/* eslint-disable no-array-constructor */
 
-export default getListStudentIds;
+export default function getListStudents(studentArray) {
+  if (!Array.isArray(studentArray)) {
+    return new Array();
+  }
+
+  return studentArray.map((student) => student.id);
+}

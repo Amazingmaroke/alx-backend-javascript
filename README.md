@@ -1,129 +1,23 @@
-# alx-backend-javascript
+![img](https://assets.imaginablefutures.com/media/images/ALX_Logo.max-200x150.png)
 
-Hands-on Backend development with javascript nodejs/expressjs
 
-## Description
+![hacker-boy](https://media4.giphy.com/media/RbDKaczqWovIugyJmW/200w.webp?cid=ecf05e470596lw1xdle2khnjie20rnxr0zjax30rkoi0l8ue&ep=v1_gifs_search&rid=200w.webp&ct=g)
 
-This repository contains all the projects done during the ALX Software Engineering program. All the projects are written in Javascript and NodeJS.
+## Modern JavaScript
 
-## Technologies
+This Repo documents the concepts, projects and resources learning Modern JavaScript(ES6), NodeJs and TypeScript at [ALX Africa](www.alxafrica.com) during the backend short specialization phase
 
-- Javascript
-- NodeJS
-- ExpressJS
-- MongoDB
-- Mongoose
-- Redis
-- Jest
+## Table of contents
+[0x00](0x00-ES6_basic): Introduction to ES6
 
-## Configuration Files
+[0x01](0x01-ES6_promise): JavaScript Promises
 
-- package.json
+[0x02](0x02-ES6_classes): JavaScript Classes
 
-```json
-{
-  "scripts": {
-    "lint": "./node_modules/.bin/eslint",
-    "check-lint": "lint [0-9]*.js",
-    "dev": "npx babel-node",
-    "test": "jest",
-    "full-test": "./node_modules/.bin/eslint [0-9]*.js && jest"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.6.0",
-    "@babel/node": "^7.8.0",
-    "@babel/preset-env": "^7.6.0",
-    "eslint": "^7.32.0",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.25.2",
-    "eslint-plugin-jest": "^22.17.0",
-    "jest": "^24.9.0"
-  }
-}
-```
+[0x03](0x03-ES6_data_manipulation): Data Manipulation
 
-- .eslintrc.js
+[0x04](0x04-TypeScript): TypeScript
 
-```js
-module.exports = {
-  env: {
-    browser: false,
-    es6: true,
-    jest: true,
-  },
-  extends: ['airbnb-base', 'plugin:jest/all'],
-  globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly',
-  },
-  parserOptions: {
-    ecmaVersion: 2018,
-    sourceType: 'module',
-  },
-  plugins: ['jest'],
-  rules: {
-    'no-console': 'off',
-    'no-shadow': 'off',
-    'no-restricted-syntax': ['error', 'LabeledStatement', 'WithStatement'],
-  },
-  overrides: [
-    {
-      files: ['*.js'],
-      excludedFiles: 'babel.config.js',
-    },
-  ],
-};
-```
+[0x05](0x05-Node_JS_basic): NodeJS Basics
 
-babel.config.js
-
-```js
-module.exports = {
-  presets: [
-    [
-      '@babel/preset-env',
-      {
-        targets: {
-          node: 'current',
-        },
-      },
-    ],
-  ],
-};
-```
-
-## Setup
-
-- Install NodeJS
-
-```bash
-$ sudo apt-get install nodejs
-```
-
-- Install npm
-
-```bash
-$ sudo apt-get install npm
-```
-
-- Clone the repository
-
-```bash
-$ git clone <url>
-```
-
-- Cd into the directory
-
-```bash
-$ cd <directory>
-```
-
-- Install dependencies
-
-```bash
-$ npm install
-```
-
-## Projects
-
-1. [0x00. ES6, basics](./0x00-ES6_basics)
+[0x06](0x06-unittests_in_js): Unit testing
